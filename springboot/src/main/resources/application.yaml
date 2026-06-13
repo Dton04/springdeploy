@@ -36,3 +36,6 @@ springdoc:
 jwt:
   secret: CPwfOlWH30eToMJLYuWoF4ArPXIcByN4LqiWmPBokSo=
 
+stripe:
+  secretKey: ${STRIPE_SECRET_KEY}
+
