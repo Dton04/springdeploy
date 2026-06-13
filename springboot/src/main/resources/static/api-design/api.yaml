@@ -1,0 +1,36 @@
+openapi: 3.0.3
+info:
+  title: API design
+  description: Basic API design for Game ecommerce
+  contact:
+    email: trungphuc94@gmail.com
+  version: 1.0.11
+servers:
+  - url: http://localhost:8080
+paths:
+  # ADMIN
+  /admin/game:
+    $ref: './paths/admin/game.yaml'
+  /admin/game/{id}:
+    $ref: './paths/admin/game.{id}.yaml'
+  /admin/game_description:
+    $ref: './paths/admin/game_description.yaml'
+  /admin/game_description/{id}:
+    $ref: './paths/admin/game_description.{id}.yaml'
+  /admin/sale:
+    $ref: './paths/admin/sale.yaml'
+  /admin/sale/{id}:
+    $ref: './paths/admin/sale.{id}.yaml'
+  /admin/coupon:
+    $ref: './paths/admin/coupon.yaml'
+  /admin/coupon/{id}:
+    $ref: './paths/admin/coupon.{id}.yaml'
+  /admin/game_key:
+    $ref: './paths/admin/game_key.yaml'
+  /admin/game_key/{id}:
+    $ref: './paths/admin/game_key.{id}.yaml'
+  # CLIENT
+  /client/game/{platform}:
+    $ref: './paths/client/game.{platform}.yaml'
+  /client/game_home:
+    $ref: './paths/client/game_home.yaml'

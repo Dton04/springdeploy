@@ -1,0 +1,29 @@
+type: object
+properties:
+  code:
+    type: string
+    example: "SLKJVSD"
+  discount_amount:
+    type: number
+    format: double
+  usage_limit:
+    type: integer
+    example: 300
+  used_count:
+    type: integer
+    example: 221
+  start_date:
+    $ref: "./types/timestamp.yaml"
+  end_date:
+    $ref: "./types/timestamp.yaml"
+  status:
+    $ref: '../enums/coupon_status.yaml'
+#required:
+#  - code
+#  - discount_amount
+#  - usage_limit
+#  - used_count
+#  - start_date
+#  - end_date
+#  - status
+#  - type

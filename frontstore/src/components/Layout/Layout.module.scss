@@ -1,0 +1,24 @@
+.reviewCard {
+  width: 300px;
+  background-color: #222;
+}
+
+.footer {
+  background-color: #2d2d2d;
+}
+
+.navLink {
+  color: #c9c9c9;
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.userHover {
+  padding: 12px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+

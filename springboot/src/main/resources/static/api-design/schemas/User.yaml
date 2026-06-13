@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 0
+  email:
+    type: string
+    example: johncena@email.com
+  name:
+    type: string
+    example: "Nguyen Van A"
+  password:
+    type: string
+    example: "12345"
+  address:
+    type: string
+    example: "123 Hung Vuong"

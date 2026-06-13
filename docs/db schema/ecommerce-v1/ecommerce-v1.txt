@@ -1,0 +1,264 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+enum esrb_rating {
+  EVERYONE
+  EVERYONE_10
+  TEEN
+  MATURE
+  ADULT
+  PENDING
+  PENDING_17
+}
+enum media_type {
+  IMAGE
+  VIDEO
+}
+enum order_status {
+  PENDING
+  PROCESSING
+  CANCELLED
+  FAILED
+}
+enum payment_method {
+  STRIPE
+}
+enum payment_status {
+  PENDING
+  PAID
+  FAIL
+}
+enum item_type {
+  GAME
+  MERCHANDISE
+}
+enum coupon_status {
+  ACTIVE
+  DISABLE
+  EXPIRE
+}
+enum cart_status {
+  ACTIVE
+  CHECKED_OUT
+  EXPIRED
+  ABANDONED
+}
+
+Table games {
+  id interger pk
+  is_dlc boolean  [not null, default: false]
+  game_dlc_id interger
+  title varchar [not null]
+  price double
+  realease_date timestamp
+  size interger
+  esrb_rating esrb_rating
+  is_deleted bool
+  developer_id interger
+  description_id interger
+  publisher_id interger
+  no_player_id interger
+}
+
+Table support_language {
+  id interger pk
+  language varchar [not null]
+}
+
+Table game_support_language {
+  id interger pk
+  support_language_id interger [not null]
+  game_id interger [not null]
+  indexes {
+    (support_language_id, game_id) [unique]
+  }
+}
+
+Table genre {
+  id interger pk
+  genre varchar [not null]
+}
+
+Table game_genre {
+  id interger pk
+  genre_id interger [not null]
+  game_id interger [not null]
+  indexes {
+    (genre_id, game_id) [unique]
+  }
+}
+
+Table no_player {
+  id interger pk
+  number varchar [not null]
+}
+
+Table medias {
+  id interger pk
+  product_id interger [not null]
+  media_type media_type [not null]
+  url varchar [not null]
+  is_primary bool [not null, default: false]
+}
+
+Table game_description {
+  id interger pk
+  descrition varchar [not null]
+}
+
+Table publishers {
+  id interger pk
+  name varchar [not null]
+}
+
+Table publisher_sale {
+  id interger pk
+  sale_id interger  [not null]
+  publisher_id interger  [not null]
+  indexes {
+    (sale_id, publisher_id) [unique]
+  }
+}
+
+Table developer {
+  id interger pk
+  name varchar [not null]
+}
+
+Table play_mode {
+  id interger pk
+  name varchar [not null]
+}
+
+Table game_play_mode {
+  id interger pk
+  game_id interger [not null]
+  play_mode_id interger [not null]
+  indexes {
+    (game_id, play_mode_id) [unique]
+  }
+}
+
+Table users {
+  id interger pk
+  email varchar [not null]
+  password varchar [not null]
+  name varchar
+  address varchar
+}
+
+Table orders {
+  id interger pk
+  user_id interger [not null]
+  order_status order_status [not null]
+  payment_method payment_method [not null]
+  payment_status payment_status [not null]
+  original_amount double
+  discount_amount double
+  total_amount double [not null]
+}
+
+Table order_item {
+  id interger pk
+  product_id interger [not null]
+  order_id interger [not null]
+  indexes {
+    (product_id, order_id) [unique]
+  }
+}
+
+Table sales {
+  id interger pk
+  start_date timestamp
+  end_date timestamp
+  amount double [not null]
+}
+
+Table coupons {
+  id interger pk
+  code varchar [not null]
+  discount_amount interger
+  usage_limit interger
+  used_count interger
+  start_date timestamp
+  end_date timestamp
+  status coupon_status
+  type_id integer [not null]
+}
+Table coupon_types {
+  id interger pk
+  type varchar [not null]
+}
+
+Table order_coupon {
+  id interger pk
+  coupon_id interger [not null]
+  order_id interger [not null]
+  indexes {
+    (coupon_id, order_id) [unique]
+  }
+}
+
+Table carts {
+  id interger pk
+  user_id interger
+  session_id interger
+  status cart_status
+}
+
+Table cart_items {
+  id interger pk
+  cart_id interger [not null]
+  product_id interger [not null]
+  indexes {
+    (cart_id, product_id) [unique]
+  }
+}
+
+Table wishlist_item {
+  id interger pk
+  product_id interger [not null]
+  user_id interger [not null]
+  indexes {
+    (user_id, product_id) [unique]
+  }
+}
+Table reviews {
+  id interger pk
+  product_id interger [not null]
+  user_id interger [not null]
+  rating interger [not null, default: 5]
+  comment varchar
+  indexes {
+    (product_id, user_id) [unique]
+  }
+}
+
+
+Ref: publishers.id < games.publisher_id
+Ref: games.description_id - game_description.id
+Ref: games.id - game_play_mode.game_id
+Ref: play_mode.id - game_play_mode.play_mode_id
+Ref: no_player.id < games.no_player_id
+Ref: genre.id - game_genre.game_id
+Ref: games.id - game_genre.genre_id
+Ref: developer.id < games.developer_id
+Ref: games.id - game_support_language.game_id
+Ref: support_language.id - game_support_language.support_language_id
+Ref: games.game_dlc_id - games.id
+Ref: order_item.order_id - orders.id 
+Ref: order_item.product_id - games.id
+Ref: order_coupon.coupon_id - coupons.id
+Ref: order_coupon.order_id - orders.id
+Ref: carts.user_id - users.id
+Ref: publishers.id - publisher_sale.publisher_id 
+Ref: publisher_sale.sale_id - sales.id
+Ref: medias.product_id - games.id
+Ref: orders.user_id - users.id
+Ref: cart_items.cart_id - carts.id
+Ref: cart_items.product_id - games.id
+Ref: wishlist_item.product_id - games.id
+Ref: coupons.type_id - coupon_types.id
+Ref: wishlist_item.user_id - users.id
+Ref: reviews.product_id - games.id
+Ref: reviews.user_id - users.id

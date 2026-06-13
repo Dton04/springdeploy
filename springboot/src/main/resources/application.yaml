@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: capstone
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    show-sql: true
+    format-sql: true
+  jackson:
+   serialization:
+     FAIL_ON_EMPTY_BEANS: false
+  # web:
+  #   cors:
+  #     allowed-origins: http://phucserver:3000
+  #     allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  #     allowed-headers: "*"
+  #     allow-credentials: true
+  #     exposed-headers: Authorization
+
+logging:
+  level:
+    org:
+      hibernate:
+        stat: debug
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs.yaml
+  swagger-ui:
+    url: /api-design/api.yaml
+
+jwt:
+  secret: CPwfOlWH30eToMJLYuWoF4ArPXIcByN4LqiWmPBokSo=
+

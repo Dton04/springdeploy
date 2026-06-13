@@ -1,0 +1,19 @@
+description: 'The specified resource was not found.'
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: 'Not found.'
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+              example: 'No static resource api/item.'
+
